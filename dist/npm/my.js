@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -742,55 +742,59 @@ module.exports = Fly;
 /***/ }),
 /* 3 */,
 /* 4 */,
-/* 5 */,
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-//weex adapter
-var stream = weex.requireModule('stream');
+// 支付宝小程序适配器
 module.exports = function (request, responseCallback) {
-    if (!request.body) {
-        delete request.body;
+  var con = {
+    method: request.method,
+    url: request.url,
+    dataType: request.dataType,
+    headers: request.headers,
+    data: request.body || {},
+    success: function success(res) {
+      responseCallback({
+        statusCode: res.status,
+        responseText: res.data,
+        headers: res.headers,
+        statusMessage: res.error
+      });
+    },
+    fail: function fail(res) {
+      responseCallback({
+        statusCode: res.status || 0,
+        responseText: res.data,
+        headers: res.headers,
+        statusMessage: res.error
+      });
     }
-    stream.fetch(request, function (res) {
-        if (res.ok) {
-            responseCallback({
-                statusCode: res.status,
-                responseText: res.data,
-                headers: res.headers,
-                statusMessage: res.statusText
-            });
-        } else {
-            responseCallback({
-                statusCode: res.status || 0,
-                statusMessage: res.statusText
-            });
-        }
-    });
+  };
+  my.httpRequest(con);
 };
 
 /***/ }),
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */,
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-//weex entry
-var Fly = __webpack_require__(2);
+// 支付宝小程序入口
+var _Fly = __webpack_require__(2);
 var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(6);
-var weexEngine = EngineWrapper(adapter);
+var adapter = __webpack_require__(5);
+var myEngine = EngineWrapper(adapter);
 module.exports = function (engine) {
-    return new Fly(engine || weexEngine);
+  return new _Fly(engine || myEngine);
 };
 
 /***/ })

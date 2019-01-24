@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -622,9 +622,9 @@ var Fly = function () {
                             // The xhr of IE9 has not response field
                             var response = engine.response || engine.responseText;
                             if (response && options.parseJson && (engine.getResponseHeader(contentType) || "").indexOf("json") !== -1
-                                // Some third engine implementation may transform the response text to json object automatically,
-                                // so we should test the type of response before transforming it
-                                && !utils.isObject(response)) {
+                            // Some third engine implementation may transform the response text to json object automatically,
+                            // so we should test the type of response before transforming it
+                            && !utils.isObject(response)) {
                                 response = JSON.parse(response);
                             }
 
@@ -642,7 +642,7 @@ var Fly = function () {
                             }
                             var status = engine.status;
                             var statusText = engine.statusText;
-                            var data = {data: response, headers: headers, status: status, statusText: statusText};
+                            var data = { data: response, headers: headers, status: status, statusText: statusText };
                             // The _response filed of engine is set in  adapter which be called in engine-wrapper.js
                             utils.merge(data, engine._response);
                             if (status >= 200 && status < 300 || status === 304) {
@@ -730,11 +730,11 @@ Fly.default = Fly;
         return this.request(url, data, utils.merge({ method: e }, option));
     };
 });
-        ["lock", "unlock", "clear"].forEach(function (e) {
-            Fly.prototype[e] = function () {
-                this.interceptors.request[e]();
-            };
-        });
+["lock", "unlock", "clear"].forEach(function (e) {
+    Fly.prototype[e] = function () {
+        this.interceptors.request[e]();
+    };
+});
 // Learn more about keep-loader: https://github.com/wendux/keep-loader
 ;
 module.exports = Fly;
@@ -743,7 +743,8 @@ module.exports = Fly;
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -777,20 +778,21 @@ module.exports = function (request, responseCallback) {
 };
 
 /***/ }),
-/* 7 */,
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 //微信小程序入口
-        var _Fly = __webpack_require__(2);
+var _Fly = __webpack_require__(2);
 var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(6);
+var adapter = __webpack_require__(7);
 var wxEngine = EngineWrapper(adapter);
 module.exports = function (engine) {
     return new _Fly(engine || wxEngine);
