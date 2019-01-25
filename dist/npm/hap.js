@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -118,7 +118,7 @@ module.exports = {
             var type = that.type(sub);
             if (type == "array") {
                 sub.forEach(function (e, i) {
-                    if (!that.isObject(data)) i = "";
+                    if (!that.isObject(e)) i = "";
                     _encode(e, path + ('%5B' + i + '%5D'));
                 });
             } else if (type == "object") {
@@ -741,7 +741,8 @@ module.exports = Fly;
 
 /***/ }),
 /* 3 */,
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -773,12 +774,13 @@ module.exports = function (fetch) {
 };
 
 /***/ }),
-/* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -787,7 +789,7 @@ module.exports = function (fetch) {
 //quick app entry
 var Fly = __webpack_require__(2);
 var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(4);
+var adapter = __webpack_require__(5);
 module.exports = function (fetch) {
     var hapEngine = EngineWrapper(adapter(fetch));
     return new Fly(hapEngine);

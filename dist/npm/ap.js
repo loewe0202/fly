@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -741,62 +741,67 @@ module.exports = Fly;
 
 /***/ }),
 /* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-// 支付宝小程序适配器
+//支付宝小程序适配器
+var statusList = {
+    11: '无权跨域',
+    12: '网络出错',
+    13: '超时',
+    14: '解码失败',
+    19: 'HTTP错误'
+};
 module.exports = function (request, responseCallback) {
-  var con = {
-    method: request.method,
-    url: request.url,
-    dataType: request.dataType,
-    headers: request.headers,
-    data: request.body || {},
-    success: function success(res) {
-      responseCallback({
-        statusCode: res.status,
-        responseText: res.data,
-        headers: res.headers,
-        statusMessage: res.error
-      });
-    },
-    fail: function fail(res) {
-      responseCallback({
-        statusCode: res.status || 0,
-        responseText: res.data,
-        headers: res.headers,
-        statusMessage: res.error
-      });
-    }
-  };
-  my.httpRequest(con);
+    var con = {
+        method: request.method,
+        url: request.url,
+        dataType: 'text',
+        header: request.headers,
+        data: request.body || {},
+        timeout: request.timeout || 20000,
+        success: function success(res) {
+            responseCallback({
+                statusCode: res.status,
+                responseText: res.data,
+                statusHeaders: res.headers
+            });
+        },
+        fail: function fail(res) {
+            responseCallback({
+                statusCode: res.status || 0,
+                responseText: res.data,
+                statusHeaders: res.headers,
+                errMsg: statusList[res.status] || ""
+            });
+        }
+    };
+    my.httpRequest(con);
 };
 
 /***/ }),
+/* 5 */,
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-// 支付宝小程序入口
+//支付宝小程序入口
 var _Fly = __webpack_require__(2);
 var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(6);
-var myEngine = EngineWrapper(adapter);
+var adapter = __webpack_require__(4);
+var aliPayEngine = EngineWrapper(adapter);
 module.exports = function (engine) {
-  return new _Fly(engine || myEngine);
+    return new _Fly(engine || aliPayEngine);
 };
 
 /***/ })
