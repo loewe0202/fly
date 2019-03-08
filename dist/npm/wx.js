@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -358,7 +358,42 @@ module.exports = EngineWrapper;
 
 /***/ }),
 
-/***/ 15:
+/***/ 10:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//微信小程序适配器
+module.exports = function (request, responseCallback) {
+    var con = {
+        method: request.method,
+        url: request.url,
+        dataType: request.dataType || undefined,
+        header: request.headers,
+        data: request.body || {},
+        responseType: request.responseType || 'text',
+        success: function success(res) {
+            responseCallback({
+                statusCode: res.statusCode,
+                responseText: res.data,
+                headers: res.header,
+                statusMessage: res.errMsg
+            });
+        },
+        fail: function fail(res) {
+            responseCallback({
+                statusCode: res.statusCode || 0,
+                statusMessage: res.errMsg
+            });
+        }
+    };
+    wx.request(con);
+};
+
+/***/ }),
+
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -367,7 +402,7 @@ module.exports = EngineWrapper;
 //微信小程序入口
 var _Fly = __webpack_require__(2);
 var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(8);
+var adapter = __webpack_require__(10);
 var wxEngine = EngineWrapper(adapter);
 module.exports = function (engine) {
     return new _Fly(engine || wxEngine);
@@ -758,41 +793,6 @@ Fly.default = Fly;
 // Learn more about keep-loader: https://github.com/wendux/keep-loader
 ;
 module.exports = Fly;
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//微信小程序适配器
-module.exports = function (request, responseCallback) {
-    var con = {
-        method: request.method,
-        url: request.url,
-        dataType: request.dataType || undefined,
-        header: request.headers,
-        data: request.body || {},
-        responseType: request.responseType || 'text',
-        success: function success(res) {
-            responseCallback({
-                statusCode: res.statusCode,
-                responseText: res.data,
-                headers: res.header,
-                statusMessage: res.errMsg
-            });
-        },
-        fail: function fail(res) {
-            responseCallback({
-                statusCode: res.statusCode || 0,
-                statusMessage: res.errMsg
-            });
-        }
-    };
-    wx.request(con);
-};
 
 /***/ })
 

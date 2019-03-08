@@ -73,32 +73,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Add base64 tag, like data:image/img;base64
- * @param responseData
- */
-module.exports = function handleImgBase64Data(responseData) {
-    var headers = responseData.headers || {};
-    var contentType = (headers["content-type"] || headers["Content-Type"] || "").toString().toLowerCase();
-    if (contentType.indexOf("image") !== -1 && responseData.responseText.indexOf("base64") === -1) {
-        responseData.responseText = "data:" + contentType + ";base64," + responseData.responseText;
-    }
-};
-
-/***/ }),
-
-/***/ 9:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 function KEEP(_,cb){cb();}
@@ -123,6 +103,26 @@ if (window.dsBridge) {
 //build环境定义全局变量
 ;
 module.exports = adapter;
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Add base64 tag, like data:image/img;base64
+ * @param responseData
+ */
+module.exports = function handleImgBase64Data(responseData) {
+    var headers = responseData.headers || {};
+    var contentType = (headers["content-type"] || headers["Content-Type"] || "").toString().toLowerCase();
+    if (contentType.indexOf("image") !== -1 && responseData.responseText.indexOf("base64") === -1) {
+        responseData.responseText = "data:" + contentType + ";base64," + responseData.responseText;
+    }
+};
 
 /***/ })
 

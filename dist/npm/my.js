@@ -73,11 +73,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -156,7 +157,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 function KEEP(_,cb){cb();}
@@ -355,7 +357,25 @@ function EngineWrapper(adapter) {
 module.exports = EngineWrapper;
 
 /***/ }),
-/* 2 */
+
+/***/ 15:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//支付宝小程序入口
+var _Fly = __webpack_require__(2);
+var EngineWrapper = __webpack_require__(1);
+var adapter = __webpack_require__(6);
+var myEngine = EngineWrapper(adapter);
+module.exports = function (engine) {
+  return new _Fly(engine || myEngine);
+};
+
+/***/ }),
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 function KEEP(_,cb){cb();}
@@ -740,16 +760,14 @@ Fly.default = Fly;
 module.exports = Fly;
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-// 支付宝小程序适配器
+//支付宝小程序适配器
 module.exports = function (request, responseCallback) {
   var con = {
     method: request.method,
@@ -777,28 +795,7 @@ module.exports = function (request, responseCallback) {
   my.httpRequest(con);
 };
 
-/***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// 支付宝小程序入口
-var _Fly = __webpack_require__(2);
-var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(6);
-var myEngine = EngineWrapper(adapter);
-module.exports = function (engine) {
-  return new _Fly(engine || myEngine);
-};
-
 /***/ })
-/******/ ]);
+
+/******/ });
 });

@@ -1,27 +1,27 @@
-//支付宝小程序适配器
+//头条小程序适配器
 module.exports = function(request, responseCallback) {
   var con = {
     method: request.method,
     url: request.url,
     dataType: request.dataType,
-    headers: request.headers,
+    header: request.headers,
     data: request.body || {},
     success: function success(res) {
       responseCallback({
-        statusCode: res.status,
+        statusCode: res.statusCode,
         responseText: res.data,
-        headers: res.headers,
-        statusMessage: res.error
+        headers: res.header,
+        statusMessage: res.errMsg
       })
     },
     fail: function fail(res) {
       responseCallback({
-        statusCode: res.status || 0,
+        statusCode: res.statusCode || 0,
         responseText: res.data,
-        headers: res.headers,
-        statusMessage: res.error
+        headers: res.header,
+        statusMessage: res.errMsg
       })
     }
   }
-  my.httpRequest(con)
+  tt.request(con)
 }

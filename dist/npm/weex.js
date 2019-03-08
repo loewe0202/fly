@@ -73,11 +73,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -156,7 +157,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 function KEEP(_,cb){cb();}
@@ -355,7 +357,25 @@ function EngineWrapper(adapter) {
 module.exports = EngineWrapper;
 
 /***/ }),
-/* 2 */
+
+/***/ 18:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//weex entry
+var Fly = __webpack_require__(2);
+var EngineWrapper = __webpack_require__(1);
+var adapter = __webpack_require__(9);
+var weexEngine = EngineWrapper(adapter);
+module.exports = function (engine) {
+    return new Fly(engine || weexEngine);
+};
+
+/***/ }),
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 function KEEP(_,cb){cb();}
@@ -740,11 +760,8 @@ Fly.default = Fly;
 module.exports = Fly;
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
+
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -773,28 +790,7 @@ module.exports = function (request, responseCallback) {
     });
 };
 
-/***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//weex entry
-var Fly = __webpack_require__(2);
-var EngineWrapper = __webpack_require__(1);
-var adapter = __webpack_require__(7);
-var weexEngine = EngineWrapper(adapter);
-module.exports = function (engine) {
-    return new Fly(engine || weexEngine);
-};
-
 /***/ })
-/******/ ]);
+
+/******/ });
 });
