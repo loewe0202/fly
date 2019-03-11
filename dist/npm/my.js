@@ -792,11 +792,7 @@ module.exports = function (request, responseCallback) {
       });
     }
   };
-  if (my.canIUse('request')) {
-    my.request(con);
-  } else {
-    my.httpRequest(con);
-  }
+  my.httpRequest(con);
 };
 
 /***/ })
