@@ -7,25 +7,25 @@ const statusList = {
     19: 'HTTP错误'
 }
 module.exports = function (request, responseCallback) {
-    var con = {
+    let con = {
         method: request.method,
         url: request.url,
         dataType: 'text',
-        header: request.headers,
+        headers: request.headers,
         data: request.body || {},
         timeout: request.timeout || 20000,
         success(res) {
             responseCallback({
                 statusCode: res.status,
                 responseText: res.data,
-                statusHeaders: res.headers
+                headers: res.headers
             })
         },
         fail(res) {
             responseCallback({
                 statusCode: res.status || 0,
                 responseText: res.data,
-                statusHeaders: res.headers,
+                headers: res.headers,
                 errMsg: statusList[res.status] || ""
             })
         }

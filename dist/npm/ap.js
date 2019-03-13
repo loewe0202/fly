@@ -239,7 +239,7 @@ function EngineWrapper(adapter) {
                         request.body = null;
                     }
                     self._changeReadyState(3);
-                    var timer;
+                    var timer = void 0;
                     self.timeout = self.timeout || 0;
                     if (self.timeout > 0) {
                         timer = setTimeout(function () {
@@ -386,8 +386,8 @@ var Fly = function () {
          * @param [interceptor] either is interceptors.request or interceptors.response
          */
         function wrap(interceptor) {
-            var resolve;
-            var reject;
+            var resolve = void 0;
+            var reject = void 0;
 
             function _clear() {
                 interceptor.p = resolve = reject = null;
@@ -518,12 +518,12 @@ var Fly = function () {
                     }
 
                     var responseType = utils.trim(options.responseType || "");
-                    var isGet = options.method === "GET";
+                    var needQuery = ["GET", "HEAD", "DELETE", "OPTION"].indexOf(options.method) !== -1;
                     var dataType = utils.type(data);
                     var params = options.params || {};
 
                     // merge url params when the method is "GET" (data is object)
-                    if (isGet && dataType === "object") {
+                    if (needQuery && dataType === "object") {
                         params = utils.merge(data, params);
                     }
                     // encode params to String
@@ -535,7 +535,7 @@ var Fly = function () {
                         _params.push(params);
                     }
                     // Add data to url params when the method is "GET" (data is String)
-                    if (isGet && data && dataType === "string") {
+                    if (needQuery && data && dataType === "string") {
                         _params.push(data);
                     }
 
@@ -569,7 +569,7 @@ var Fly = function () {
                         data = JSON.stringify(data);
                     }
                     //If user doesn't set content-type, set default.
-                    if (!(customContentType || isGet)) {
+                    if (!(customContentType || needQuery)) {
                         options.headers[contentType] = _contentType;
                     }
 
@@ -642,16 +642,16 @@ var Fly = function () {
                             }
                             var status = engine.status;
                             var statusText = engine.statusText;
-                            var data = { data: response, headers: headers, status: status, statusText: statusText };
+                            var _data = { data: response, headers: headers, status: status, statusText: statusText };
                             // The _response filed of engine is set in  adapter which be called in engine-wrapper.js
-                            utils.merge(data, engine._response);
+                            utils.merge(_data, engine._response);
                             if (status >= 200 && status < 300 || status === 304) {
-                                data.engine = engine;
-                                data.request = options;
-                                onresult(responseInterceptor.handler, data, 0);
+                                _data.engine = engine;
+                                _data.request = options;
+                                onresult(responseInterceptor.handler, _data, 0);
                             } else {
                                 var e = new Err(statusText, status);
-                                e.response = data;
+                                e.response = _data;
                                 onerror(e);
                             }
                         } catch (e) {
@@ -668,7 +668,7 @@ var Fly = function () {
                     };
                     engine._options = options;
                     setTimeout(function () {
-                        engine.send(isGet ? null : data);
+                        engine.send(needQuery ? null : data);
                     }, 0);
                 }
 
@@ -760,21 +760,21 @@ module.exports = function (request, responseCallback) {
         method: request.method,
         url: request.url,
         dataType: 'text',
-        header: request.headers,
+        headers: request.headers,
         data: request.body || {},
         timeout: request.timeout || 20000,
         success: function success(res) {
             responseCallback({
                 statusCode: res.status,
                 responseText: res.data,
-                statusHeaders: res.headers
+                headers: res.headers
             });
         },
         fail: function fail(res) {
             responseCallback({
                 statusCode: res.status || 0,
                 responseText: res.data,
-                statusHeaders: res.headers,
+                headers: res.headers,
                 errMsg: statusList[res.status] || ""
             });
         }
