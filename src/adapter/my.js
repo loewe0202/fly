@@ -5,6 +5,7 @@ module.exports = function(request, responseCallback) {
     url: request.url,
     dataType: request.dataType,
     headers: request.headers,
+    timeout: request.timeout || 30000,
     data: request.body || {},
     success: function success(res) {
       responseCallback({
@@ -23,5 +24,5 @@ module.exports = function(request, responseCallback) {
       })
     }
   }
-  my.httpRequest(con)
+  my.request(con)
 }
